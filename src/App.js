@@ -1,23 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
-
+import CardList from "./components/cardlist/CardList";
+import { useState, useEffect } from "react";
+import "./App.css";
+import axios from "axios";
+import SearchBox from "./components/search-box/SearchBox";
 function App() {
+  const [users, setUser] = useState([]);
+  const [searchField, setSearchField] = useState("");
+
+  const listData = async () => {
+    const res = await axios.get("https://jsonplaceholder.typicode.com/users");
+    console.log(res.data);
+    setUser(res.data);
+  };
+
+  useEffect(() => {
+    listData();
+  }, []);
+
+  const handleSearch = (e) => {
+    setSearchField(e.target.value);
+  };
+  const filteredUser = users.filter((user) =>
+    user.email.toLowerCase().includes(searchField.toLowerCase())
+  );
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <h1>Monesters Rolodex</h1>
+      <SearchBox
+        placeholder='Search itmes'
+        handleSearch={handleSearch}
+        searchField={searchField}
+      />
+      {/* <CardList users={users} /> before filter apply*/}
+      <CardList users={filteredUser} />
     </div>
   );
 }

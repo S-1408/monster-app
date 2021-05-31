@@ -1,0 +1,21 @@
+.card-container{
+    display: flex;
+    flex-direction: column;
+    background-color: aquamarine;
+    border:1px solid grey;
+    border-radius: 5px;
+    padding: 25px;
+    cursor:pointer;
+    -moz-osx-font-smoothing:greyscale;
+    backface-visibility: hidden;
+    transition: transform 0.25s ease-out;
+}
+.card-container :hover {
+    transform: scale(1.05);
+}
+.card-container p{
+    text-align: center;
+}
+.card-container h3{
+    text-align: center;
+}
